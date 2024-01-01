@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.6.4/math.js" integrity="sha512-BbVEDjbqdN3Eow8+empLMrJlxXRj5nEitiCAK5A1pUr66+jLVejo3PmjIaucRnjlB0P9R3rBUs3g5jXc8ti+fQ==" crossorigin="anonymous"></script>
+    <title>Calculator</title>
+
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+    <link rel="stylesheet" href="style.css" />
+   
+   
+</head>
+
+<body  class="bg-slate-950">
+    <div>
+        <div  class="2xl:mt-[30px]">
+            <h1 class="text-center lg:text-[3rem] text-[1.5rem] font-bold text-white">Calci</h1>
+            <p class="p-3 text-cyan-100 text-center xl:text-xl">You can only use keyboard inputs on first field (use both fields simultaneously) to achieve more usability</p><br>
+            <p class="text-teal-700 text-center">Delete => CLR && Backspace => DEL</p>
+            <div class="mt-[20px] flex justify-center align-items-ceter">
+                <div class="p-3 outline outline-offset-2  rounded-lg outline-cyan-100">
+                    <div   class="flex p-2.5 items-end flex-col justify-around  w-full outline outline-2 outline-sky-900 rounded-lg h-[4rem]" >
+                        <div  data-previous-operand class="text-[1rem] text-slate-300"></div>
+                        <div data-current-operand class="text-[1.75rem] text-white"></div>
+                    </div>
+                    <input  disabled  placeholder="Scifi+Normal (virtualpad only)" id="display" type="text" class="mt-2 p-3 w-full text-[1.2rem] text-sky-100 bg-transparent outline outline-2 outline-sky-900 rounded-lg h-[4rem]">
+                    <div
+                        class=" mt-2 w-[18rem] h-max bg-sky-200 outlin font-bolde outline-2 outline-sky-900 rounded-lg md:w-[23rem]  ">
+                        <div id="calculator" class="grid grid-cols-4 grid-flow-row  2xl:gap-4 ">
+                            <button data-all-clear class="bg-sky-900 text-white rounded-md m-2 p-3">CLR</button>
+                            <input type="button" onclick="display.value=''" value="CLR(Sci)" class="bg-white rounded-md m-2 text-sm px-[1.4px] font-bold "> </input>
+
+                            <button onclick="display.value += '%'" class="bg-sky-100 rounded-md m-2 p-3 font-bold">%</button>
+
+                            <button onclick="display.value += '^'" class="bg-sky-100 rounded-md m-2 p-3 font-bold">^</button>
+                            <button onclick="display.value += '1'" class="bg-sky-600 rounded-md m-2 p-3 font-bold">1</button>
+                            <button onclick="display.value += '2'"  class="bg-sky-600 rounded-md m-2 p-3 font-bold">2</button>
+                            <button  onclick="display.value += '3'"  class="bg-sky-600 rounded-md m-2 p-3 font-bold">3</button>
+                            <button  onclick="display.value += '+'" data-operation class="bg-sky-100 rounded-md m-2 p-3 font-bold">+</button>
+                            <button  onclick="display.value += '4'"  class="bg-sky-600 rounded-md m-2 p-3 font-bold">4</button>
+                            <button onclick="display.value += '5'"  class="bg-sky-600 rounded-md m-2 p-3 font-bold">5</button>
+                            <button onclick="display.value += '6'"  class="bg-sky-600 rounded-md m-2 p-3 font-bold">6</button>
+                            <button onclick="display.value += '-'"  class="bg-sky-100 rounded-md m-2 p-3 font-bold">-</button>
+                            <button onclick="display.value += '7'"  class="bg-sky-600 rounded-md m-2 p-3 font-bold">7</button>
+                            <button onclick="display.value += '8'" class="bg-sky-600 rounded-md m-2 p-3 font-bold">8</button>
+                            <button onclick="display.value += '9'" class="bg-sky-600 rounded-md m-2 p-3 font-bold">9</button>
+
+                            <button onclick="display.value += '/'" class="bg-sky-100 rounded-md m-2 p-3 font-bold">/</button>
+
+                        </div>
+                        <div class="grid grid-cols-4 grid-flow-row 2xl:gap-6">
+                            <button onclick="display.value += '0'"class="bg-sky-600 rounded-md m-2 py-3  px-3 font-bold">0</button>
+                            <button onclick="display.value += '.'"  class="bg-sky-100 rounded-md m-2 py-3  px-3 font-bold">.</button>
+                            <button data-equals class="bg-sky-100 rounded-md m-2 py-3  px-3 font-bold">↵</button>
+                            <button onclick="display.value += '*'"  class="bg-sky-100 rounded-md m-2 py-3  px-3 font-bold">*</button>
+                        </div>
+
+                        <div class="grid grid-cols-4 grid-flow-row 2xl:gap-4 gap-2 mt-[10px]">
+                            <input type="button" value="&#9003;" onclick="backspace()" class ="bg-white rounded-md m-2 text-sm px-[1.4px] "></input>
+                            <button data-delete class="bg-sky-100 text-red-800 rounded-md m-2 p-3 font-bold">DEL</button>
+
+                            <input type="button" value="=>Sci" onclick="calculate()" class ="bg-white rounded-md m-2 text-sm px-[1.4px]  font-bold"></input>
+                            <input value="log(" onclick="display.value+= 'log('"  class="bg-sky-500 rounded-md m-2 p-3 font-bold"></input>
+            
+                            <input type="button" onclick="display.value+= ')'" value=")" class="bg-sky-500 rounded-md m-2 p-3 font-bold"></input>
+
+                            <input onclick="display.value += 'sin('" type="button" value="sin(" class="bg-sky-500 rounded-md m-2 p-3 font-bold"></input>
+                            <input onclick="display.value += 'cos('" type="button" value="cos(" class="bg-sky-500 rounded-md m-2 p-3 font-bold"></input>
+                            <input onclick="display.value += 'tan('" type="button" value="tan(" class="bg-sky-500 rounded-md m-2 p-3 font-bold"></input>
+                            
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="calculator.js"></script>
+</body>
+
+</html>
